@@ -5,6 +5,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
   build:
@@ -20,13 +21,13 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Grant execute permission for gradlew
-      run: |
-        chmod +x ./gradlew
-        ls -la
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3
+      with:
+        gradle-version: '8.0'
 
     - name: Build APK
-      run: ./gradlew assembleRelease --no-daemon
+      run: gradle assembleRelease --no-daemon
 
     - name: Upload APK as artifact
       uses: actions/upload-artifact@v4

@@ -34,6 +34,19 @@ The project includes the necessary Gradle wrapper files:
 - `gradlew.bat` - Windows batch gradle wrapper script
 - `gradle/wrapper/gradle-wrapper.properties` - Gradle wrapper properties file
 
+## Build Process
+
+The GitHub Actions workflow uses the Gradle setup action to properly configure Gradle for building the APK. This ensures that all necessary Gradle components are available during the build process.
+
+## Compilation Fixes
+
+The project has been updated with several fixes to ensure successful compilation:
+- Updated MainActivity to extend AppCompatActivity for better compatibility
+- Added necessary dependencies (appcompat and core libraries)
+- Used a theme compatible with AppCompat
+- Added proguard rules to prevent build issues
+- Configured proper build settings for release builds
+
 ## Downloading the APK
 
 To download the APK:
