@@ -14,6 +14,26 @@ This project is configured to build automatically using GitHub Actions. Here's h
 2. The built APK will be available as a release asset
 3. You can download the APK from the Releases tab
 
+## Getting GitHub Token
+
+The GitHub Actions workflow uses `GITHUB_TOKEN` which is automatically provided by GitHub. You don't need to create or configure anything - it's available by default in all workflows. The workflow is set up to use this token for creating releases.
+
+## GitHub Actions Workflow
+
+The workflow has been updated to use the latest versions of GitHub Actions:
+- `actions/checkout@v4`
+- `actions/setup-java@v4`
+- `actions/upload-artifact@v4`
+- `actions/download-artifact@v4`
+- `softprops/action-gh-release@v2` (replaces deprecated release actions)
+
+## Project Structure
+
+The project includes the necessary Gradle wrapper files:
+- `gradlew` - Unix/Mac executable gradle wrapper script
+- `gradlew.bat` - Windows batch gradle wrapper script
+- `gradle/wrapper/gradle-wrapper.properties` - Gradle wrapper properties file
+
 ## Downloading the APK
 
 To download the APK:

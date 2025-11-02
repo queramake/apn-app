@@ -21,7 +21,9 @@ jobs:
         cache: gradle
 
     - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+      run: |
+        chmod +x ./gradlew
+        ls -la
 
     - name: Build APK
       run: ./gradlew assembleRelease --no-daemon
