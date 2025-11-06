@@ -1,73 +1,71 @@
-# APN Settings Shortcut
+# APN Settings Launcher App
 
-A simple Android app that acts as a shortcut to launch the APN settings screen on Android devices.
+This is a native Android application that automatically opens the APN (Access Point Name) settings when launched, similar to the functionality provided in the original React Native code.
+
+## Functionality
+
+The app does the following:
+1. Automatically launches the Android APN settings screen when the app starts
+2. Provides a button to manually open the APN settings again if needed
+3. Includes fallback to general settings if APN settings are not available on the device
 
 ## How It Works
 
-This app directly launches the APN settings activity (`com.android.settings.Settings$ApnSettingsActivity`) from the Android Settings app. When you tap the app icon, it will open the APN settings screen where you can configure Access Point Names.
-
-## Building with GitHub Actions
-
-This project is configured to build automatically using GitHub Actions. Here's how it works:
-
-1. When you push changes to the `main` branch, GitHub Actions will automatically build the APK
-2. The built APK will be available as a release asset
-3. You can download the APK from the Releases tab
-
-## Getting GitHub Token
-
-The GitHub Actions workflow uses `GITHUB_TOKEN` which is automatically provided by GitHub. You don't need to create or configure anything - it's available by default in all workflows. The workflow is set up to use this token for creating releases.
-
-## GitHub Actions Workflow
-
-The workflow has been updated to use the latest versions of GitHub Actions:
-- `actions/checkout@v4`
-- `actions/setup-java@v4`
-- `actions/upload-artifact@v4`
-- `actions/download-artifact@v4`
-- `softprops/action-gh-release@v2` (replaces deprecated release actions)
+The main functionality is implemented in `MainActivity.java`:
+- When the app starts, it creates an Intent with action `android.intent.action.MAIN`
+- Sets the class name to `com.android.settings.Settings$ApnSettingsActivity` to target the APN settings
+- Includes error handling and fallback to general settings if APN settings are not accessible
 
 ## Project Structure
 
-The project includes the necessary Gradle wrapper files:
-- `gradlew` - Unix/Mac executable gradle wrapper script
-- `gradlew.bat` - Windows batch gradle wrapper script
-- `gradle/wrapper/gradle-wrapper.properties` - Gradle wrapper properties file
+```
+app/
+├── src/main/
+│   ├── java/com/apntest/MainActivity.java
+│   ├── res/layout/activity_main.xml
+│   └── AndroidManifest.xml
+├── build.gradle
+├── settings.gradle
+└── README.md
+```
 
-## Build Process
+## Build Instructions
 
-The GitHub Actions workflow uses the Gradle setup action to properly configure Gradle for building the APK. This ensures that all necessary Gradle components are available during the build process.
+To build and run this app:
 
-## Compilation Fixes
+1. Make sure you have Android Studio installed with the Android SDK
+2. Open the project in Android Studio
+3. Sync the project with Gradle files
+4. Connect an Android device or start an emulator
+5. Click "Run" to build and install the app
 
-The project has been updated with several fixes to ensure successful compilation:
-- Updated MainActivity to extend AppCompatActivity for better compatibility
-- Added necessary dependencies (appcompat and core libraries)
-- Used a theme compatible with AppCompat
-- Added proguard rules to prevent build issues
-- Configured proper build settings for release builds
+Alternatively, you can build from the command line:
 
-## Downloading the APK
+```bash
+# Build the project
+./gradlew build
 
-To download the APK:
+# Install on a connected device
+./gradlew installDebug
+```
 
-1. Go to the "Releases" tab in your GitHub repository
-2. Find the latest release
-3. Download the `apn-settings-shortcut.apk` file
-4. Install it on your Android device (you may need to allow installation from unknown sources)
+## GitHub Actions CI/CD
 
-## Project Structure
+This project includes a GitHub Actions workflow that automatically:
+- Builds the Android project on every push/PR to main/master
+- Runs tests
+- Builds the debug APK
+- Uploads the APK as an artifact for download
 
-- `app/src/main/AndroidManifest.xml` - App manifest with permissions and activities
-- `app/src/main/java/com/apn/shortcut/MainActivity.java` - Main activity that launches the APN settings
-- `app/build.gradle` - App build configuration
-- `.github/workflows/build-release.yml` - GitHub Actions workflow for building and releasing
+The workflow is defined in `.github/workflows/android-build.yml`
 
 ## Permissions
 
-The app requires the `QUERY_ALL_PACKAGES` permission to check if the Settings app is available on the device.
+The app doesn't require special permissions as it simply launches system settings using Intents.
 
 ## Compatibility
 
-- Minimum SDK: 21 (Android 5.0)
-- Target SDK: 34 (Android 14)
+- Minimum SDK: API level 21 (Android 5.0)
+- Target SDK: API level 33 (Android 13)
+
+Note: The app will only work on Android devices. The APN settings functionality is specific to Android and will not work on other platforms.
